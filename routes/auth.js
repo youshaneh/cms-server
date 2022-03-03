@@ -6,9 +6,8 @@ const db = require('../db');
 
 router.post('/', function (req, res, next) {
   db.getInstance().query(`SELECT u.email, u.password, u.salt, u.token, c.name, c.domain, c.plan_id, c.due_date FROM client_user u
-      JOIN client c ON u.client_id = c.id WHERE email = $1 AND DOMAIN = $2`, [
-    req.body.email,
-    req.body.domain
+      JOIN client c ON u.client_id = c.id WHERE email = $1`, [
+    req.body.email
   ])
     .then((data) => {
       if (data.length === 0) {

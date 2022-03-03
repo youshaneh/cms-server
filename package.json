@@ -12,6 +12,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
     "express": "~4.16.1",
+    "nodemailer": "^6.7.2",
     "pg-promise": "^10.11.1"
   }
 }
