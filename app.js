@@ -8,6 +8,7 @@ var ddosGuard = require('./ddos-guard');
 var db = require('./db');
 
 var authRouter = require('./routes/auth');
+var releaseRouter = require('./routes/release');
 var resetPasswordRouter = require('./routes/reset-password');
 var usersRouter = require('./routes/users');
 var clientsRouter = require('./routes/clients');
@@ -23,9 +24,12 @@ app.use(cors())
 
 app.use(ddosGuard());
 app.post('/reset_password', ddosGuard(5000, 30000)); //this endpoint involves sending email, increase the interval further
-app.use(['/users', '/clients', '/clients/*'], tokenChecker);
+
+app.use(['/users', '/clients', '/clients/*'], tokenChecker.admin);
+app.use(['/release/:clientId', '/release/:clientId/*'], tokenChecker.client);
 
 app.use('/auth', authRouter);
+app.use(['/release'], releaseRouter);
 app.use('/reset_password', resetPasswordRouter);
 app.use('/users', usersRouter);
 app.use(['/clients', '/clients/*'], clientsRouter);
