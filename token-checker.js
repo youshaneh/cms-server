@@ -22,7 +22,7 @@ function client(req, res, next) {
     return;
   }
 
-  db.getInstance().query(`SELECT distinct c.id FROM client c JOIN client_user u on c.id = u.client_id WHERE u.token = $1`, [
+  db.getInstance().query(`SELECT distinct c.id FROM client c JOIN client_user u on c.id = u.client_id WHERE c.token = $1`, [
     token
   ])
     .then((data) => {
